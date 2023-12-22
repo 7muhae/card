@@ -12,15 +12,6 @@ public class startManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //int clearLevel = 0;
-        //if (PlayerPrefs.HasKey("clearLevel") == true) // 해당 데이터가 저장되어 있는지 확인
-        //{
-        //    clearLevel = PlayerPrefs.GetInt("clearLevel");
-        //}
-        //transform.Find("LevelBtn1").GetComponent<Image>().tintColor = Color.gray;
-        //transform.Find("LevelBtn2").GetComponent<Image>().tintColor = Color.gray;
-        //transform.Find("LevelBtn3").GetComponent<Image>().tintColor = Color.gray;
-        //transform.Find("LevelBtn4").GetComponent<Image>().tintColor = Color.gray;
         
     }
 
