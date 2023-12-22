@@ -1,26 +1,18 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
     public Animator anim;
-    public AudioSource audioData;
-
-    private GameObject _cardFront;
-    private GameObject _cardBack;
+    public AudioClip flip;
+    public AudioSource audioSource;
 
     public void OpenCard()
     {
-        var audioSource = Instantiate(audioData);
-        audioSource.clip = Resources.Load<AudioClip>("click");
-        audioSource.Play(0);
-        audioSource.GetComponent<AudioData>().DestroySelf();
+        audioSource.PlayOneShot(flip); // 오디오 한번 실행
+
         anim.SetBool("isOpen", true);
         transform.Find("Front").gameObject.SetActive(true);
         transform.Find("Back").gameObject.SetActive(false);
-        transform.Find("Back").GetComponent<SpriteRenderer>().color = Color.grey;
         
         if (GameManager.Instance.firstCard == null)
         {
@@ -35,10 +27,6 @@ public class Card : MonoBehaviour
     
     public void DestroyCard()
     {
-        var audioSource = Instantiate(audioData);
-        audioSource.clip = Resources.Load<AudioClip>("correct");
-        audioSource.Play(0);
-        audioSource.GetComponent<AudioData>().DestroySelf();
         Invoke(nameof(DestroyCardInvoke), 0.5f);
     }
     
@@ -54,11 +42,8 @@ public class Card : MonoBehaviour
     
     private void CloseCardInvoke()
     {
-        var audioSource = Instantiate(audioData);
-        audioSource.clip = Resources.Load<AudioClip>("fail");
-        audioSource.Play(0);
-        audioSource.GetComponent<AudioData>().DestroySelf();
         anim.SetBool("isOpen", false);
+        transform.Find("Back").GetComponent<SpriteRenderer>().color = Color.gray; // 뒷면 색상을 그레이로 변경
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
     }
