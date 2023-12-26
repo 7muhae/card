@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
-public class startManager : MonoBehaviour
+public class ResetBtn : MonoBehaviour
 {
-    public Image LevelBtn1;
-    public Image LevelBtn2;
-    public Image LevelBtn3;
-    public Image LevelBtn4;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +15,11 @@ public class startManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ClickResetBtn()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene("StartScene");
     }
 }

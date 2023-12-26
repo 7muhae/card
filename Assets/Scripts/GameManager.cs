@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject secondCard;
     public GameObject endText;
     public Text timeText;
+    public Text highScoreText;
     public AudioSource audioSource;
     public AudioClip match;
 
@@ -22,8 +23,18 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        int selectLevel;
-        selectLevel = PlayerPrefs.GetInt("selectLevel"); // 시작화면에서 선택한 레벨 불러오기
+        int selectLevel = PlayerPrefs.GetInt("selectLevel"); // 시작화면에서 선택한 레벨 불러오기
+        string scoreKeyName = selectLevel + "LevelScore";
+        if (PlayerPrefs.HasKey(scoreKeyName) == true) // 현재레벨에 최고기록이 있는지 확인
+        {
+            float score = PlayerPrefs.GetFloat(scoreKeyName);
+            highScoreText.text = "최고: " + score.ToString("N2"); // 최고기록 화면상단에 표시하기
+        }
+        else
+        {
+            highScoreText.text = ""; // 빈 텍스트로 만들기
+        }
+
 
         int[] images = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
 
