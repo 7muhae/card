@@ -157,6 +157,15 @@ MonoBehaviour:
   firstCard: {fileID: 0}
   secondCard: {fileID: 0}
   endText: {fileID: 1397631139}
+  sprites:
+  - {fileID: 21300000, guid: 66e93b15fa0a00946905e8935c95c9bf, type: 3}
+  - {fileID: 21300000, guid: 7d54a3b14dd5bb94d9a34254b8c2521b, type: 3}
+  - {fileID: 21300000, guid: 1c374ec1fc38c9b459e0aea864e71661, type: 3}
+  - {fileID: 21300000, guid: 40da5a61e26a1f04db5c64d0218f31b1, type: 3}
+  - {fileID: 21300000, guid: 982c1e0092ba27c4fae9c2c281d2128a, type: 3}
+  - {fileID: 21300000, guid: 4945be30e64fab3489d52275807daf5b, type: 3}
+  - {fileID: 21300000, guid: 430826125f2079f4ca2860dd76ee55d1, type: 3}
+  - {fileID: 21300000, guid: 294f82f6c66e3784ea9128c5d2168b04, type: 3}
   timeText: {fileID: 1251302933}
   highScoreText: {fileID: 553110755}
   audioSource: {fileID: 122118147}
