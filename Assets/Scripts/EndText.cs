@@ -32,7 +32,7 @@ public class EndText : MonoBehaviour
             // 조건1: 최고기록이 없는가?
             // 조건2: 현재기록이 최고기록보다 높은가?
             // 코드: 현재기록을 최고기록으로 갱신하기
-            if (PlayerPrefs.HasKey(scoreKeyName) == false || score > PlayerPrefs.GetFloat(scoreKeyName))
+            if (PlayerPrefs.HasKey(scoreKeyName) == false || score < PlayerPrefs.GetFloat(scoreKeyName))
             {
                 PlayerPrefs.SetFloat(scoreKeyName, score); // 최고기록으로 저장
             }
