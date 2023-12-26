@@ -62,7 +62,9 @@ public class GameManager : MonoBehaviour
         images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
         
         var cards = GameObject.Find("Cards").transform;
-        var j = 0;
+        // 변수 i는 화면에 배치할 카드위치
+        // 변수 j는 화면에 배치할 카드순서
+        var j = 0; 
         for (var i = 0; i < 20; i++)
         {
             if (levelArr[i] > selectLevel) { continue; } // 레벨을 확인하고 배치한다
@@ -72,7 +74,7 @@ public class GameManager : MonoBehaviour
             var y = (i / 4) * 1.4f - 4.0f;
             newCard.transform.position = new Vector3(x, y, 0);
             // var rtanName = "rtan" + images[i].ToString();
-            var spriteName = sprites[images[j++]].name;
+            var spriteName = sprites[images[j++]].name; // 카드가 배치되면 카드순서를 1증가시킨다
             // newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(rtanName);
             newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
         }
