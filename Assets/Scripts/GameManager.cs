@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         }
 
         /// <summary>
-        /// 슬라이더 제어 메소드!
+        /// 슬라이더 제어 메소드
         /// </summary>
         IEnumerator CountDownTimerRoutine()   
         {
