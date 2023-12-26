@@ -38,35 +38,41 @@ public class GameManager : MonoBehaviour
         }
 
 
-        // 원본 카드 배열
-        int[] sourcesImages = { 0, 1, 2, 3, 4, 5, 6, 7 };
-        // 모든 값이 -1 인 16개 길이의 배열
-        int[] images = new int[16];
-        for (var i = 0; i < 16; i++) { images[i] = -1; }
+        // 원본 이미지 카드 배열
+        int[] sourcesImages = { 0, 1, 2, 3, 4, 5, 6, 7 ,6 ,5 };
+        // 게임에 사용할 비어있는 카드 배열
+        int[] images = new int[4 + (selectLevel * 4)];
         // 난이도에 따른 카드 개수 조절(최소 1, 최대 4)
-        for (var i = 0; i < 4 + selectLevel; i++)
+        for (var i = 0; i < 2 + (selectLevel * 2); i++)
         {
             // 카드가 짝이 맞도록 2개씩 넣기
-            images[i] = sourcesImages[i];
-            images[i + 8] = sourcesImages[i];
+            images[i * 2] = sourcesImages[i];
+            images[i * 2 + 1] = sourcesImages[i];
         }
-
+        // 레벨별 배치도
+        int[] levelArr = {
+            4, 3, 3, 4,
+            2, 1, 1, 2,
+            1, 1, 1, 1,
+            2, 1, 1, 2,
+            4, 3, 3, 4 
+        };
 
         // 섞기
         images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
         
         var cards = GameObject.Find("Cards").transform;
-        for (var i = 0; i < 16; i++)
+        var j = 0;
+        for (var i = 0; i < 20; i++)
         {
-            if (images[i] == -1) { continue; } // -1 인경우 없는 카드로 간주하고 배치하지 않기
+            if (levelArr[i] > selectLevel) { continue; } // 레벨을 확인하고 배치한다
             var newCard = Instantiate(card, cards, true);
-            
-            var x = (i / 4) * 1.4f - 2.1f;
-            var y = (i % 4) * 1.4f - 3.0f;
-            newCard.transform.position = new Vector3(x, y, 0);
 
+            var x = (i % 4) * 1.4f - 2.1f;
+            var y = (i / 4) * 1.4f - 4.0f;
+            newCard.transform.position = new Vector3(x, y, 0);
             // var rtanName = "rtan" + images[i].ToString();
-            var spriteName = sprites[images[i]].name;
+            var spriteName = sprites[images[j++]].name;
             // newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(rtanName);
             newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
         }
