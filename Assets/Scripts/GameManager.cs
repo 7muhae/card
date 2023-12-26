@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
         
         var cards = GameObject.Find("Cards").transform;
-        // 변수 i는 화면에 배치할 카드위치
-        // 변수 j는 화면에 배치할 카드순서
+        // 변수 i는 화면에 배치할 카드위치계산에 필요
+        // 변수 j는 화면에 배치할 카드순서를 세는데 필요
         var j = 0; 
         for (var i = 0; i < 20; i++)
         {
