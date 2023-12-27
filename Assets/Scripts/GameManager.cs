@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -74,34 +75,52 @@ public class GameManager : MonoBehaviour
             2, 1, 1, 2,
             4, 3, 3, 4 
         };
-        
+
         //int[] images = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
 
         // images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
 
-        for (var i = 0; i < images.Length; ++i)
-        {
-            var random1 = Random.Range(0, images.Length);
-            var random2 = Random.Range(0, images.Length);
+        // for (var i = 0; i < images.Length; ++i)
+        // {
+        //     var random1 = Random.Range(0, images.Length);
+        //     var random2 = Random.Range(0, images.Length);
+        // 
+        //     var temp = images[random1];
+        //     images[random1] = images[random2];
+        //     images[random2] = temp;
+        // }
+        // 섞기
+        images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
 
-            var temp = images[random1];
-            images[random1] = images[random2];
-            images[random2] = temp;
-        }
-        
         var cards = GameObject.Find("Cards").transform;
-        for (var i = 0; i < 16; i++)
+        var j = 0;
+        for (var i = 0; i < 20; i++)
         {
             if (levelArr[i] > selectLevel) { continue; } // 레벨을 확인하고 배치한다
             var newCard = Instantiate(card, cards, true);
-            
-            var x = (i / 4) * 1.4f - 2.1f;
-            var y = (i % 4) * 1.4f - 3.0f;
-            newCard.transform.position = new Vector3(x, y, 0);
 
-            var spriteName = sprites[images[i]].name;
+            var x = (i % 4) * 1.4f - 2.1f;
+            var y = (i / 4) * 1.4f - 4.0f;
+            newCard.transform.position = new Vector3(x, y, 0);
+            // var rtanName = "rtan" + images[i].ToString();
+            var spriteName = sprites[images[j++]].name;
+            // newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(rtanName);
             newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
         }
+
+        //var cards = GameObject.Find("Cards").transform;
+        //for (var i = 0; i < 16; i++)
+        //{
+        //    if (levelArr[i] > selectLevel) { continue; } // 레벨을 확인하고 배치한다
+        //    var newCard = Instantiate(card, cards, true);
+        //    
+        //    var x = (i / 4) * 1.4f - 2.1f;
+        //    var y = (i % 4) * 1.4f - 3.0f;
+        //    newCard.transform.position = new Vector3(x, y, 0);
+        //
+        //    var spriteName = sprites[images[i]].name;
+        //    newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
+        //}
         
         Time.timeScale = 1.0f;
     }

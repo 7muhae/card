@@ -169,11 +169,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bd8e2d75642b94041b321c4809d02c2a, type: 3}
   - {fileID: 21300000, guid: 4f7b55ecd91b07543a5d269b441ab879, type: 3}
   timeText: {fileID: 1188791116}
-  highScoreText: {fileID: 0}
+  highScoreText: {fileID: 1521038312}
   countText: {fileID: 1956783660}
   nameText: {fileID: 1454801176}
   count: 0
-  timeSlider: {fileID: 0}
+  timeSlider: {fileID: 1374936727}
 --- !u!4 &122118146
 Transform:
   m_ObjectHideFlags: 0
