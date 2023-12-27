@@ -1,7 +1,11 @@
+using System;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-
+using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -9,34 +13,44 @@ public class GameManager : MonoBehaviour
     public GameObject firstCard;
     public GameObject secondCard;
     public GameObject endText;
-    public GameObject countGameObject;
-    public AudioSource audioData;
-    public AudioSource bgmSource;
-    public Sprite[] sprites;
     public Text timeText;
-    public Text countText;
+    public Text failScore;
+    public GameObject endPanel;
     public Text nameText;
-    public int count;
+
+    int fail;
 
     private float _time = 0.0f;
 
     private void Awake()
     {
         Instance = this;
-        bgmSource = null;
     }
     
     private void Start()
     {
-        count = 0;
-        var audioSource = Instantiate(audioData);
-        audioSource.clip = Resources.Load<AudioClip>("start");
-        audioSource.Play(0);
-        audioSource.GetComponent<AudioData>().DestroySelf();
-        
-        int[] images = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
+        int[] images =  { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
+        //images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
+        //¼¯±â
+        int random1, random2;
+        var temp = 0;
 
-        images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
+        for (int i = 0; i < images.Length; ++i)
+        {
+            random1 = Random.Range(0, images.Length);
+            random2 = Random.Range(0, images.Length);
+
+            temp = images[random1];
+            images[random1] = images[random2];
+            images[random2] = temp;
+        }
+        for (int k = 0; k < images.Length; k++)
+        {
+            Debug.Log(images[k]);
+        }
+
+
+
 
         var cards = GameObject.Find("Cards").transform;
         for (var i = 0; i < 16; i++)
@@ -47,8 +61,8 @@ public class GameManager : MonoBehaviour
             var y = (i % 4) * 1.4f - 3.0f;
             newCard.transform.position = new Vector3(x, y, 0);
 
-            var spriteName = sprites[images[i]].name;
-            newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
+            var rtanName = "rtan" + images[i].ToString();
+            newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(rtanName);
         }
 
         Time.timeScale = 1.0f;
@@ -58,58 +72,59 @@ public class GameManager : MonoBehaviour
     {
         _time += Time.deltaTime;
         timeText.text = _time.ToString("N2");
-        
+
+        //Å¸ÀÌ¸Ó ½Ã°£ÀÌ ÃË¹Ú ÇÒ ¶§ °ÔÀÌ¸Ó¿¡°Ô °æ°íÇÏ´Â ±â´É ÀÛ¼ºÇØº¸±â(½Ã°£ÀÌ ºÓ°Ô º¯ÇÏ°Å³ª ±ä¹ÚÇÑ ¹è°æÀ½¾ÇÀ¸·Î º¯°æ)
+        if (_time > 20.0f)
+            timeText.color = Color.red;
+
         if (_time > 30.0f)
         {
-            endText.SetActive(true);
-            countGameObject.SetActive(true);
-            countText.text = "count : " + count.ToString();
+            failScore.text = "µÚÁýÀº È½¼ö : " + fail;//string¿¡ int ³ÖÀ¸¸é ±×³É stringÀ¸·Î Çü¹Ù²ñ
+            endPanel.SetActive(true);
             Time.timeScale = 0.0f;
-        }
-        else if (_time > 20.0f)
-        {
-            if (!bgmSource)
-            {
-                bgmSource = Instantiate(audioData);
-                bgmSource.clip = Resources.Load<AudioClip>("bgm");
-                bgmSource.Play(0);
-            }
-
-            timeText.color = Color.red;
         }
     }
     
     public void IsMatched()
     {
-        count++;
-        
+        fail += 1;//µÚÁýÀ»¶§¸Å´Ù fail++
+        //Debug.Log(fail);
+        //Debug.Log("µÚÁýÀº È½¼ö" + fail);
         var firstCardImage = firstCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
         var secondCardImage = secondCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
-
+        
         if (firstCardImage == secondCardImage)
         {
+            nameText.text = "" + firstCardImage;
+
             firstCard.GetComponent<Card>().DestroyCard();
             secondCard.GetComponent<Card>().DestroyCard();
-
-            nameText.text = firstCardImage.Substring(0, firstCardImage.Length - 1);
             
             var cardsLeft = GameObject.Find("Cards").transform.childCount;
+
             if (cardsLeft == 2)
             {
-                endText.SetActive(true);
-                countGameObject.SetActive(true);
-                countText.text = "count : " + count.ToString();
+                failScore.text = "µÚÁýÀº È½¼ö : " + fail;//
+                endPanel.SetActive(true);
                 Time.timeScale = 0.0f;
             }
         }
         else
         {
-            nameText.text = "ì‹¤íŒ¨";
+            _time += 2.0f;
+            teamName("½ÇÆÐ! 2ÃÊ Ãß°¡!");
             firstCard.GetComponent<Card>().CloseCard();
             secondCard.GetComponent<Card>().CloseCard();
         }
-        
+
         firstCard = null;
         secondCard = null;
+
+        
+    }
+
+    void teamName(string name)
+    {
+        nameText.text = "" + name;
     }
 }
