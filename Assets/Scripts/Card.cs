@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Card : MonoBehaviour
@@ -9,6 +10,7 @@ public class Card : MonoBehaviour
 
     private int _num = 0;
     private GameObject _cardBack;
+    private Coroutine _closeCardCoroutine;
 
     public void OpenCard()
     {
@@ -23,11 +25,17 @@ public class Card : MonoBehaviour
         if (GameManager.Instance.firstCard == null)
         {
             GameManager.Instance.firstCard = gameObject;
+            _closeCardCoroutine = StartCoroutine(CloseCardAfterDelay(3.0f)); 
         }
         else
         {
             GameManager.Instance.secondCard = gameObject;
             GameManager.Instance.IsMatched();
+            if (_closeCardCoroutine != null)    //첫번쨰 카드 클릭하고 다음 카드를 안뒤집으면 3초뒤에 다시 뒤집히는 코드
+            {
+                StopCoroutine(_closeCardCoroutine);    
+                _closeCardCoroutine = null;
+            }
         }
     }
     
@@ -38,6 +46,7 @@ public class Card : MonoBehaviour
         audioSource.Play(0);
         audioSource.GetComponent<AudioData>().DestroySelf();
         Invoke(nameof(DestroyCardInvoke), 1f);
+        _closeCardCoroutine = null;      
     }
     
     public void CloseCard()
@@ -66,5 +75,11 @@ public class Card : MonoBehaviour
         audioSource.Play(0);
         audioSource.GetComponent<AudioData>().DestroySelf();
         anim.SetBool("isOpen", false);
+    }
+    
+    private IEnumerator CloseCardAfterDelay(float delay)    //첫번쨰 카드 클릭하고 다음 카드를 안뒤집으면 3초뒤에 다시 뒤집히는 코드
+    {
+        yield return new WaitForSeconds(delay);
+        CloseCard();
     }
 }
