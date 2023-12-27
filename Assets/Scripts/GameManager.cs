@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject card;
     public GameObject firstCard;
     public GameObject secondCard;
-    public GameObject endText;
+    public GameObject endPanel;
     public GameObject countGameObject;
     public AudioSource audioData;
     public AudioSource bgmSource;
@@ -18,7 +19,9 @@ public class GameManager : MonoBehaviour
     public Text highScoreText;
     public Text countText;
     public Text nameText;
+    public Text resultText;
     public int count;
+    public int result;
 
     private float _time = 60.0f;
     private int _cardLeftNum;
@@ -123,12 +126,13 @@ public class GameManager : MonoBehaviour
     {
         _time -= Time.deltaTime;
         timeText.text = _time.ToString("N2");
-        
+        countText.text = "count : " + count;
+        resultText.text = "점수 : " + result;
+        result = (count + (int)_time);
         if (_time <= 0.0f)
         {
-            endText.SetActive(true);
+            endPanel.SetActive(true);
             countGameObject.SetActive(true);
-            countText.text = "count : " + count;
             Time.timeScale = 0.0f;
             _time = 0.0f;
         }
@@ -171,7 +175,7 @@ public class GameManager : MonoBehaviour
             _cardLeftNum -= 2;
             if (_cardLeftNum == 0)
             {
-                endText.SetActive(true);
+                endPanel.SetActive(true);
                 countGameObject.SetActive(true);
                 countText.text = "count : " + count;
                 Time.timeScale = 0.0f;
