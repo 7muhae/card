@@ -127,8 +127,6 @@ public class GameManager : MonoBehaviour
         _time -= Time.deltaTime;
         timeText.text = _time.ToString("N2");
         countText.text = "count : " + count;
-        resultText.text = "점수 : " + result;
-        result = (count + (int)_time);
         if (_time <= 0.0f)
         {
             endPanel.SetActive(true);
@@ -178,6 +176,8 @@ public class GameManager : MonoBehaviour
                 endPanel.SetActive(true);
                 countGameObject.SetActive(true);
                 countText.text = "count : " + count;
+                result = 50 + (int)(_time * 2f - count);
+                resultText.text = "점수 : " + result;
                 Time.timeScale = 0.0f;
             }
         }
