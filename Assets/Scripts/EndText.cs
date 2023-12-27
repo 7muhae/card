@@ -10,14 +10,14 @@ public class EndText : MonoBehaviour
     // EndText 클릭 이벤트
     public void RetryGame()
     {
-        float score = Convert.ToSingle(timeText.text); // 현재 점수
+        float time = Convert.ToSingle(timeText.text); // 현재 time
         int selectLevel = PlayerPrefs.GetInt("selectLevel"); // 현재 레벨
         string scoreKeyName = selectLevel + "LevelScore"; // "1LevelScore", "2LevelScore", "3LevelScore"... 등 PlayerPrefs.Get...() 등 에 사용될 문자열
 
         // 목적: 게임을 클리어했다면 최고클리어레벨과 최고기록 갱신하기
         // 조건: 제한시간안에 클리어했는가(30초 이상일시 클리어 실패)
         // 코드: 목적과 동일
-        if (score < 30f)
+        if (time > 0f)
         {
             // 목적: 최고 클리어레벨 갱신하기
             // 조건1: 클리어한 최고 레벨이 없거나
@@ -32,9 +32,9 @@ public class EndText : MonoBehaviour
             // 조건1: 최고기록이 없는가?
             // 조건2: 현재기록이 최고기록보다 높은가?
             // 코드: 현재기록을 최고기록으로 갱신하기
-            if (PlayerPrefs.HasKey(scoreKeyName) == false || score < PlayerPrefs.GetFloat(scoreKeyName))
+            if (PlayerPrefs.HasKey(scoreKeyName) == false || time < PlayerPrefs.GetFloat(scoreKeyName))
             {
-                PlayerPrefs.SetFloat(scoreKeyName, score); // 최고기록으로 저장
+                PlayerPrefs.SetFloat(scoreKeyName, time); // 최고기록으로 저장
             }
         }
 
