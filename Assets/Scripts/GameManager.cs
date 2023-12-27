@@ -80,7 +80,16 @@ public class GameManager : MonoBehaviour
             4, 3, 3, 4 
         };
 
-        images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
+        //images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
+        for (int i = 0; i < images.Length; ++i)
+        {
+            var random1 = Random.Range(0, images.Length);
+            var random2 = Random.Range(0, images.Length);
+
+            var temp = images[random1];
+            images[random1] = images[random2];
+            images[random2] = temp;
+        }
 
         var cards = GameObject.Find("Cards").transform;
         var j = 0;
@@ -163,7 +172,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            nameText.text = "실패! 2초 감소!";
+            nameText.text = "실패!\n 2초 감소!";
             firstCard.GetComponent<Card>().CloseCard();
             secondCard.GetComponent<Card>().CloseCard();
             _time -= 2.0f;       // 시간 빼기 
