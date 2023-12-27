@@ -15,7 +15,7 @@ public class EndText : MonoBehaviour
         string scoreKeyName = selectLevel + "LevelScore"; // "1LevelScore", "2LevelScore", "3LevelScore"... 등 PlayerPrefs.Get...() 등 에 사용될 문자열
 
         // 목적: 게임을 클리어했다면 최고클리어레벨과 최고기록 갱신하기
-        // 조건: 제한시간안에 클리어했는가(30초 이상일시 클리어 실패)
+        // 조건: 제한시간안에 클리어했는가
         // 코드: 목적과 동일
         if (time > 0f)
         {
