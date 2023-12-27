@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int count;
 
     private float _time = 60.0f;
+    private Coroutine _closeCardCoroutine;
 
     [SerializeField]
     private Slider timeSlider;      //슬라이더 코드
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         bgmSource = null;
+        _closeCardCoroutine = null;
     }
     
     private void Start()
@@ -137,14 +139,14 @@ public class GameManager : MonoBehaviour
             countText.text = "count : " + count;
             Time.timeScale = 0.0f;
             _time = 0.0f;
-        } 
+        }
         else if (_time <= 10.0f)
         {
             var t = Mathf.PingPong(Time.time, 1.0f);
-
+            
             var color = Color.Lerp(Color.red, Color.white, t);
             timeText.color = color;
-
+            
             var scale = Mathf.Lerp(1.5f, 1.0f, t);
             timeText.transform.localScale = new Vector3(scale, scale, scale);
 
@@ -162,6 +164,12 @@ public class GameManager : MonoBehaviour
         var firstCardImage = firstCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
         var secondCardImage = secondCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
 
+        if (_closeCardCoroutine != null)    //첫번쨰 카드 클릭하고 다음 카드를 안뒤집으면 3초뒤에 다시 뒤집히는 코드
+        {
+            StopCoroutine(_closeCardCoroutine);
+            _closeCardCoroutine = null;
+        }
+        
         if (firstCardImage == secondCardImage)
         {
             firstCard.GetComponent<Card>().DestroyCard();
@@ -190,6 +198,11 @@ public class GameManager : MonoBehaviour
         firstCard = null;
         secondCard = null;
     }
+
+    public void CardFlipCoroutine()
+    {
+        _closeCardCoroutine = StartCoroutine(CloseCardAfterDelay(3.0f));
+    }
     
     /// <summary>
     /// 슬라이더 제어 메소드
@@ -202,5 +215,13 @@ public class GameManager : MonoBehaviour
             timeSlider.value = _currentTime / _timeLimit;
             yield return null;
         }
+    }
+    
+    private IEnumerator CloseCardAfterDelay(float delay)    //첫번쨰 카드 클릭하고 다음 카드를 안뒤집으면 3초뒤에 다시 뒤집히는 코드
+    {
+        yield return new WaitForSeconds(delay);
+        firstCard.GetComponent<Card>().CloseCardInvoke();
+        firstCard = null;
+        _closeCardCoroutine = null;
     }
 }
