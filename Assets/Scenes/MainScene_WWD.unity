@@ -161,14 +161,16 @@ MonoBehaviour:
   audioData: {fileID: 0}
   bgmSource: {fileID: 0}
   sprites:
-  - {fileID: 21300000, guid: 66e93b15fa0a00946905e8935c95c9bf, type: 3}
-  - {fileID: 21300000, guid: 7d54a3b14dd5bb94d9a34254b8c2521b, type: 3}
-  - {fileID: 21300000, guid: 1c374ec1fc38c9b459e0aea864e71661, type: 3}
-  - {fileID: 21300000, guid: 40da5a61e26a1f04db5c64d0218f31b1, type: 3}
-  - {fileID: 21300000, guid: 982c1e0092ba27c4fae9c2c281d2128a, type: 3}
-  - {fileID: 21300000, guid: 4945be30e64fab3489d52275807daf5b, type: 3}
-  - {fileID: 21300000, guid: 430826125f2079f4ca2860dd76ee55d1, type: 3}
-  - {fileID: 21300000, guid: 294f82f6c66e3784ea9128c5d2168b04, type: 3}
+  - {fileID: 21300000, guid: 5b8404b9dd4f03c478bf84f51cfc34ea, type: 3}
+  - {fileID: 21300000, guid: 2202e1c17e1ab18479f6537bca7e263c, type: 3}
+  - {fileID: 21300000, guid: 1eb5e3f64d13cd34082bd00100988da3, type: 3}
+  - {fileID: 21300000, guid: 9b5fe63c6c37bd84788a252a7ecb4418, type: 3}
+  - {fileID: 21300000, guid: 1896557d29d92604a946c68a59bda624, type: 3}
+  - {fileID: 21300000, guid: 1024f2dd359952041a25d15be35f8381, type: 3}
+  - {fileID: 21300000, guid: b9c21ab3322f61644a455cb0ecc0ee8f, type: 3}
+  - {fileID: 21300000, guid: cb6fbfd480651914aa7ce603af84f788, type: 3}
+  - {fileID: 21300000, guid: 2e6785c20471fed4f9712d4ca93f88a8, type: 3}
+  - {fileID: 21300000, guid: cf928b97120da2a4282184ddb9b24696, type: 3}
   timeText: {fileID: 1251302933}
   highScoreText: {fileID: 553110755}
   countText: {fileID: 0}

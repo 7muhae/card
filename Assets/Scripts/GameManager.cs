@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int count;
 
     private float _time = 60.0f;
+    private int _cardLeftNum;
     private Coroutine _closeCardCoroutine;
 
     [SerializeField]
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(CountDownTimerRoutine());    // 슬라이더 코드
         
         count = 0;
+        _cardLeftNum = 0;
         var audioSource = Instantiate(audioData);
         audioSource.clip = Resources.Load<AudioClip>("start");
         audioSource.Play(0);
@@ -59,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
         
         // 원본 이미지 카드 배열
-        int[] sourcesImages = { 0, 1, 2, 3, 4, 5, 6, 7 ,6 ,5 };
+        int[] sourcesImages = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         // 게임에 사용할 비어있는 카드 배열
         int[] images = new int[4 + (selectLevel * 4)];
         // 난이도에 따른 카드 개수 조절(최소 1, 최대 4)
@@ -78,20 +80,6 @@ public class GameManager : MonoBehaviour
             4, 3, 3, 4 
         };
 
-        //int[] images = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
-
-        // images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
-
-        // for (var i = 0; i < images.Length; ++i)
-        // {
-        //     var random1 = Random.Range(0, images.Length);
-        //     var random2 = Random.Range(0, images.Length);
-        // 
-        //     var temp = images[random1];
-        //     images[random1] = images[random2];
-        //     images[random2] = temp;
-        // }
-        // 섞기
         images = images.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
 
         var cards = GameObject.Find("Cards").transform;
@@ -99,6 +87,7 @@ public class GameManager : MonoBehaviour
         for (var i = 0; i < 20; i++)
         {
             if (levelArr[i] > selectLevel) { continue; } // 레벨을 확인하고 배치한다
+            _cardLeftNum++;
             var newCard = Instantiate(card, cards, true);
 
             var x = (i % 4) * 1.4f - 2.1f;
@@ -109,20 +98,6 @@ public class GameManager : MonoBehaviour
             // newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(rtanName);
             newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
         }
-
-        //var cards = GameObject.Find("Cards").transform;
-        //for (var i = 0; i < 16; i++)
-        //{
-        //    if (levelArr[i] > selectLevel) { continue; } // 레벨을 확인하고 배치한다
-        //    var newCard = Instantiate(card, cards, true);
-        //    
-        //    var x = (i / 4) * 1.4f - 2.1f;
-        //    var y = (i % 4) * 1.4f - 3.0f;
-        //    newCard.transform.position = new Vector3(x, y, 0);
-        //
-        //    var spriteName = sprites[images[i]].name;
-        //    newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spriteName);
-        //}
         
         Time.timeScale = 1.0f;
     }
@@ -176,9 +151,9 @@ public class GameManager : MonoBehaviour
             secondCard.GetComponent<Card>().DestroyCard();
 
             nameText.text = firstCardImage.Substring(0, firstCardImage.Length - 1);
-            
-            var cardsLeft = GameObject.Find("Cards").transform.childCount;
-            if (cardsLeft == 2)
+
+            _cardLeftNum -= 2;
+            if (_cardLeftNum == 0)
             {
                 endText.SetActive(true);
                 countGameObject.SetActive(true);
