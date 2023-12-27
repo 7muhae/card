@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             images[i * 2] = sourcesImages[i];
             images[i * 2 + 1] = sourcesImages[i];
         }
-        // 레벨별 배치도
+        // 레벨별 배치도(상하 반전 주의, 숫자 개수 주의(숫자1 8개, 숫자234 4개))
         int[] levelArr = {
             4, 3, 3, 4,
             2, 1, 1, 2,
