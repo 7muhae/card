@@ -1,4 +1,5 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,8 @@ public class GameManager : MonoBehaviour
     public Text nameText;
     public int count;
 
-    private float _time = 0.0f;
+    private float _time = 60.0f;
+    private static readonly int Num = Animator.StringToHash("num");
 
     private void Awake()
     {
@@ -56,24 +58,22 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        _time += Time.deltaTime;
+        _time -= Time.deltaTime;
         timeText.text = _time.ToString("N2");
         
-        if (_time > 30.0f)
+        if (_time <= 0.0f)
         {
             endText.SetActive(true);
             countGameObject.SetActive(true);
             countText.text = "count : " + count.ToString();
             Time.timeScale = 0.0f;
+            _time = 0.0f;
         }
-        else if (_time > 20.0f)
+        else if (!bgmSource && _time <= 10.0f)
         {
-            if (!bgmSource)
-            {
-                bgmSource = Instantiate(audioData);
-                bgmSource.clip = Resources.Load<AudioClip>("bgm");
-                bgmSource.Play(0);
-            }
+            bgmSource = Instantiate(audioData);
+            bgmSource.clip = Resources.Load<AudioClip>("bgm");
+            bgmSource.Play(0);
 
             timeText.color = Color.red;
         }
@@ -98,12 +98,13 @@ public class GameManager : MonoBehaviour
             {
                 endText.SetActive(true);
                 countGameObject.SetActive(true);
-                countText.text = "count : " + count.ToString();
+                countText.text = "count : " + count;
                 Time.timeScale = 0.0f;
             }
         }
         else
         {
+            _time -= 2f;
             nameText.text = "실패";
             firstCard.GetComponent<Card>().CloseCard();
             secondCard.GetComponent<Card>().CloseCard();

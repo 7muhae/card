@@ -112,6 +112,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7964610377300717280}
   - component: {fileID: 6128363990968132198}
+  - component: {fileID: 4276746755306991959}
+  - component: {fileID: 8494873910676313111}
   m_Layer: 0
   m_Name: Front
   m_TagString: Untagged
@@ -174,8 +176,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d453fac09f847e34484d948073f66b2a, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -183,9 +185,43 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4276746755306991959
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2209650658773008204}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 711eda45860e11746b3d18a6f754aba8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8494873910676313111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2209650658773008204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cd46fe837ea55a4aaf01f51e1236969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4276746755306991959}
 --- !u!1 &5377413709832037975
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,8 +559,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: -1444087020155251022}
-  nameText: {fileID: 7944552252741075625}
   audioData: {fileID: 4084698038715152346, guid: a2c67a483a8c8a94d8f7a3b6e8866e01, type: 3}
+  cardShow: {fileID: 8494873910676313111}
+  cardFront: {fileID: 2209650658773008204}
 --- !u!114 &-685334068278581328
 MonoBehaviour:
   m_ObjectHideFlags: 0
