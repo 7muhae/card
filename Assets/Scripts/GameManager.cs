@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         _time -= Time.deltaTime;
         timeText.text = _time.ToString();
 
-        if (_time > 60.0f)
+        if (_time < 0.0f)
         {
             endText.SetActive(true);
             countGameObject.SetActive(true);
@@ -97,13 +97,21 @@ public class GameManager : MonoBehaviour
         }
         else if (_time < 10.0f)
         {
+            float t = Mathf.PingPong(Time.time, 1.0f);
+
+            Color color = Color.Lerp(Color.red, Color.white, t);
+            timeText.color = color;
+
+            float scale = Mathf.Lerp(1.5f, 1.0f, t);
+            timeText.transform.localScale = new Vector3(scale, scale, scale);
+
             if (!bgmSource)
             {
                 bgmSource = Instantiate(audioData);
                 bgmSource.clip = Resources.Load<AudioClip>("bgm");
                 bgmSource.Play(0);
             }
-            timeText.color = Color.red;
+            
         }
     }
 
