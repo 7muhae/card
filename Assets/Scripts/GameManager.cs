@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     private float _time = 60.0f;
     private int _cardLeftNum;
+    private bool _isEmergency;
     private Coroutine _closeCardCoroutine;
 
     [SerializeField]
@@ -43,10 +44,17 @@ public class GameManager : MonoBehaviour
         
         count = 0;
         _cardLeftNum = 0;
+        _isEmergency = false;
+        
         var audioSource = Instantiate(audioData);
         audioSource.clip = Resources.Load<AudioClip>("start");
         audioSource.Play(0);
         audioSource.GetComponent<AudioData>().DestroySelf();
+        bgmSource = Instantiate(audioData);
+        bgmSource.clip = Resources.Load<AudioClip>("bgm");
+        bgmSource.pitch = 0.95f;
+        bgmSource.loop = true;
+        bgmSource.Play(0);
         
         int selectLevel = PlayerPrefs.GetInt("selectLevel"); // 시작화면에서 선택한 레벨 불러오기
         string scoreKeyName = selectLevel + "LevelScore"; // PlayerPrefs 에서 사용할 KeyName을 만든다
@@ -134,10 +142,9 @@ public class GameManager : MonoBehaviour
             var scale = Mathf.Lerp(1.5f, 1.0f, t);
             timeText.transform.localScale = new Vector3(scale, scale, scale);
 
-            if (bgmSource) return;
-            bgmSource = Instantiate(audioData);
-            bgmSource.clip = Resources.Load<AudioClip>("bgm");
-            bgmSource.Play(0);
+            if (_isEmergency) return;
+            _isEmergency = true;
+            bgmSource.pitch = 1.05f;
         }
     }
     

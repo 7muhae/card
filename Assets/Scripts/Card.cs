@@ -71,6 +71,7 @@ public class Card : MonoBehaviour
         _isOpen = false;
         var audioSource = Instantiate(audioData);
         audioSource.clip = Resources.Load<AudioClip>("fail");
+        audioSource.volume = 0.4f;
         audioSource.Play(0);
         audioSource.GetComponent<AudioData>().DestroySelf();
         anim.SetBool("isOpen", false);
