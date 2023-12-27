@@ -130,13 +130,21 @@ public class GameManager : MonoBehaviour
         _time -= Time.deltaTime;
         timeText.text = _time.ToString("N2");
         
-        if (_time <= 10.0f)
+        if (_time <= 0.0f)
+        {
+            endText.SetActive(true);
+            countGameObject.SetActive(true);
+            countText.text = "count : " + count;
+            Time.timeScale = 0.0f;
+            _time = 0.0f;
+        } 
+        else if (_time <= 10.0f)
         {
             var t = Mathf.PingPong(Time.time, 1.0f);
-            
+
             var color = Color.Lerp(Color.red, Color.white, t);
             timeText.color = color;
-            
+
             var scale = Mathf.Lerp(1.5f, 1.0f, t);
             timeText.transform.localScale = new Vector3(scale, scale, scale);
 
@@ -144,14 +152,6 @@ public class GameManager : MonoBehaviour
             bgmSource = Instantiate(audioData);
             bgmSource.clip = Resources.Load<AudioClip>("bgm");
             bgmSource.Play(0);
-        }
-        else if (_time <= 0.0f)
-        {
-            endText.SetActive(true);
-            countGameObject.SetActive(true);
-            countText.text = "count : " + count;
-            Time.timeScale = 0.0f;
-            _time = 0.0f;
         }
     }
     

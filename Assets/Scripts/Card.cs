@@ -11,7 +11,7 @@ public class Card : MonoBehaviour
     private int _num = 0;
     private GameObject _cardBack;
     private Coroutine _closeCardCoroutine;
-
+    
     public void OpenCard()
     {
         var audioSource = Instantiate(audioData);
@@ -80,6 +80,10 @@ public class Card : MonoBehaviour
     private IEnumerator CloseCardAfterDelay(float delay)    //첫번쨰 카드 클릭하고 다음 카드를 안뒤집으면 3초뒤에 다시 뒤집히는 코드
     {
         yield return new WaitForSeconds(delay);
+        if (GameManager.Instance.firstCard == gameObject)
+        {
+            GameManager.Instance.firstCard = null;
+        }
         CloseCard();
     }
 }
