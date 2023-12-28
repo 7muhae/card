@@ -38,6 +38,7 @@ public class EndText : MonoBehaviour
             }
         }
 
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("StartScene"); // 시작메뉴로 돌아가기
     }
 }
